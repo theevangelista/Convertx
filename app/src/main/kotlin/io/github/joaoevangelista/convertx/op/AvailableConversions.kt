@@ -9,12 +9,12 @@ enum class Conversion(@StringRes val title: Int) {
   AREA(R.string.conversion_area)
 }
 
-enum class MeasureUnits {
-  METERS, KILOMETERS, CENTIMETERS, MILLIMETERS
+enum class MeasureUnits(val unit: String) {
+  METERS("m"), KILOMETERS("km"), CENTIMETERS("cm"), MILLIMETERS("mm")
 }
 
-enum class Temperatures {
-  CELSIUS, FAHRENHEIT, KELVIN
+enum class Temperatures(val unit: String) {
+  CELSIUS("°C"), FAHRENHEIT("°F"), KELVIN("K")
 }
 
 val measureUnits = MeasureUnits.values()
