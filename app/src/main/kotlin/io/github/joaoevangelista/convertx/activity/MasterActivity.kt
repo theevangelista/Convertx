@@ -19,9 +19,10 @@ import io.github.joaoevangelista.convertx.R
 import io.github.joaoevangelista.convertx.R.id
 import io.github.joaoevangelista.convertx.R.layout
 import io.github.joaoevangelista.convertx.bindView
-import io.github.joaoevangelista.convertx.op.Conversion
-import io.github.joaoevangelista.convertx.op.Conversion.MEASURE_UNIT
+import io.github.joaoevangelista.convertx.op.ConversionTypes
+import io.github.joaoevangelista.convertx.op.NamedUnit
 import io.github.joaoevangelista.convertx.op.conversions
+import io.github.joaoevangelista.convertx.op.typesMap
 
 class MasterActivity : AppCompatActivity() {
 
@@ -30,6 +31,10 @@ class MasterActivity : AppCompatActivity() {
   private val title: TextView by bindView(id.toolbar_title)
 
   private val conversionTypes: Spinner by bindView(id.conversion_spinner_selector)
+
+  private val fromUnitSpinner: Spinner by bindView(id.spinner_from_unit)
+
+  private val toUnitSpinner: Spinner by bindView(id.spinner_to_unit)
 
   private val dataInput: EditText by bindView(id.data_input)
 
@@ -44,8 +49,9 @@ class MasterActivity : AppCompatActivity() {
     dataInput.typeface = Typeface.createFromAsset(assets, getString(R.string.custom_font))
 
     val names = conversions.map { it -> getString(it.title) }
-    val conversionTypesAdapter = ArrayAdapter<String>(baseContext, layout.first_item_spinner_layout , names)
-    conversionTypesAdapter.setDropDownViewResource(layout.simple_spinner_item)
+    val conversionTypesAdapter = ArrayAdapter<String>(baseContext, layout.first_item_spinner_layout,
+      names)
+    conversionTypesAdapter.setDropDownViewResource(layout.simple_toolbar_spinner_item)
     conversionTypes.adapter = conversionTypesAdapter
 
     conversionTypes.onItemSelectedListener = object : OnItemSelectedListener {
@@ -69,12 +75,29 @@ class MasterActivity : AppCompatActivity() {
       }
     })
 
-
-    loadTypesForConversion(MEASURE_UNIT)
+    // load initial set of types
+    loadTypesForConversion(conversions[0])
   }
 
-  private fun loadTypesForConversion(conversion: Conversion) {
-    // todo
+  private fun loadTypesForConversion(conversionTypes: ConversionTypes) {
+    val typeUnits = typesMap.find { it.first == conversionTypes }?.second
+    // Set up the adapters
+    setToUnitAdapter(typeUnits)
+    setFromUnitAdapter(typeUnits)
+  }
+
+  private fun setToUnitAdapter(typeUnits: Array<out NamedUnit>?) {
+    val toUnitAdapter = ArrayAdapter<String>(baseContext, layout.first_item_spinner_layout,
+      typeUnits?.map { it -> getString(it.t()) })
+    toUnitAdapter.setDropDownViewResource(layout.simple_spinner_item)
+    toUnitSpinner.adapter = toUnitAdapter
+  }
+
+  private fun setFromUnitAdapter(typeUnits: Array<out NamedUnit>?) {
+    val fromUnitAdapter = ArrayAdapter<String>(baseContext, layout.first_item_spinner_layout,
+      typeUnits?.map { it -> getString(it.t()) })
+    fromUnitAdapter.setDropDownViewResource(layout.simple_spinner_item)
+    fromUnitSpinner.adapter = fromUnitAdapter
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {

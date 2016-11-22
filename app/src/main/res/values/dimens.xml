@@ -2,4 +2,7 @@
   <dimen name="app_bar_height">180dp</dimen>
   <dimen name="fab_margin">16dp</dimen>
   <dimen name="text_margin">16dp</dimen>
+  <dimen name="spinner_secondary_bar_width">150dp</dimen>
+  <dimen name="spinner_toolbar_width">130dp</dimen>
+  <dimen name="thumb_radius">2dp</dimen>
 </resources>

@@ -1,9 +1,10 @@
 package io.github.joaoevangelista.convertx.op
 
-import io.github.joaoevangelista.convertx.op.MeasureUnits.CENTIMETERS
-import io.github.joaoevangelista.convertx.op.MeasureUnits.KILOMETERS
-import io.github.joaoevangelista.convertx.op.MeasureUnits.METERS
-import io.github.joaoevangelista.convertx.op.MeasureUnits.MILLIMETERS
+import io.github.joaoevangelista.convertx.op.Lengths.CENTIMETERS
+import io.github.joaoevangelista.convertx.op.Lengths.KILOMETERS
+import io.github.joaoevangelista.convertx.op.Lengths.METERS
+import io.github.joaoevangelista.convertx.op.Lengths.MILES
+import io.github.joaoevangelista.convertx.op.Lengths.MILLIMETERS
 import io.github.joaoevangelista.convertx.op.Temperatures.CELSIUS
 import io.github.joaoevangelista.convertx.op.Temperatures.FAHRENHEIT
 import io.github.joaoevangelista.convertx.op.Temperatures.KELVIN
@@ -28,6 +29,7 @@ class UnitBridgeTest {
     assert(bridge.measureUnit(CENTIMETERS) == SI.CENTIMETER)
     assert(bridge.measureUnit(METERS) == SI.METER)
     assert(bridge.measureUnit(KILOMETERS) == SI.KILOMETER)
+    assert(bridge.measureUnit(MILES) == NonSI.MILE)
   }
 
   @Test fun shouldConvertTemperatures() {

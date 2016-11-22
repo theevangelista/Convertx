@@ -33,11 +33,11 @@
         />
 
       <Spinner
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
         android:id="@+id/conversion_spinner_selector"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/spinner_toolbar_width"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="1dp"
         />
     </android.support.v7.widget.Toolbar>
@@ -53,20 +53,22 @@
     android:layout_height="?attr/actionBarSize"
     android:background="@color/colorPrimary"
     android:elevation="4dp"
+    android:padding="4dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:targetApi="lollipop"
-    android:padding="4dp"
     >
 
     <Spinner
       android:id="@+id/spinner_from_unit"
-      android:layout_width="wrap_content"
+      android:layout_width="@dimen/spinner_secondary_bar_width"
       android:layout_height="wrap_content"
       android:layout_alignParentLeft="true"
       android:layout_alignParentStart="true"
-      android:layout_marginLeft="8dp"
-      android:layout_marginStart="8dp"
-      app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+      android:paddingEnd="16dp"
+      android:paddingLeft="8dp"
+      android:paddingRight="16dp"
+      android:paddingStart="8dp"
+      android:theme="@style/AppTheme.Light.Spinner"
       />
 
     <ImageView
@@ -79,13 +81,15 @@
 
     <Spinner
       android:id="@+id/spinner_to_unit"
-      android:layout_width="wrap_content"
+      android:layout_width="@dimen/spinner_secondary_bar_width"
       android:layout_height="wrap_content"
       android:layout_alignParentEnd="true"
       android:layout_alignParentRight="true"
-      android:layout_marginEnd="8dp"
-      android:layout_marginRight="8dp"
-      app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+      android:paddingEnd="8dp"
+      android:paddingLeft="16dp"
+      android:paddingRight="8dp"
+      android:paddingStart="16dp"
+      android:theme="@style/AppTheme.Light.Spinner"
       />
 
   </RelativeLayout>
