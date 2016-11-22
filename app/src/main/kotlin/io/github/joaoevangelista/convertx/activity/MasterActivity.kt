@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.CardView
 import android.support.v7.widget.Toolbar
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -17,6 +15,7 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import com.jakewharton.rxbinding.widget.RxTextView
 import io.github.joaoevangelista.convertx.R
 import io.github.joaoevangelista.convertx.R.id
 import io.github.joaoevangelista.convertx.R.layout
@@ -26,6 +25,8 @@ import io.github.joaoevangelista.convertx.op.ConversionTypes
 import io.github.joaoevangelista.convertx.op.NamedUnit
 import io.github.joaoevangelista.convertx.op.conversions
 import io.github.joaoevangelista.convertx.op.typesMap
+import rx.Subscription
+import java.util.concurrent.TimeUnit.MILLISECONDS
 
 class MasterActivity : AppCompatActivity() {
 
@@ -48,6 +49,8 @@ class MasterActivity : AppCompatActivity() {
   private var currentConversion: ConversionTypes = conversions[0]
 
   private val executor = ConversionExecutor()
+
+  private lateinit var textChangesSubscription: Subscription
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -74,17 +77,9 @@ class MasterActivity : AppCompatActivity() {
       }
     }
 
-    dataInput.addTextChangedListener(object : TextWatcher {
-      override fun afterTextChanged(p0: Editable?) {
-
-      }
-
-      override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-      }
-
-      override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-      }
-    })
+    RxTextView.textChanges(dataInput).debounce(500,
+      MILLISECONDS).map { it.toString() }
+      .filter(String::isBlank).subscribe { }
 
     // load initial set of types
     loadTypesForConversion(conversions[0])
@@ -110,9 +105,8 @@ class MasterActivity : AppCompatActivity() {
       typeUnits?.map { it -> getString(it.t()) })
     toUnitAdapter.setDropDownViewResource(layout.simple_spinner_item)
     toUnitSpinner.onItemSelectedListener = ToUnitItemSelected(typeUnits,
-      onChange = { fromUnit, toUnit ->
-        executor.execute(dataInput.text.toString(), Pair(fromUnit, toUnit),
-          onResult = { updatedResultBox(it) })
+      notifyChange = {
+        executor.execute(dataInput.text.toString(), onResult = { updatedResultBox(it) })
       })
     toUnitSpinner.adapter = toUnitAdapter
   }
@@ -122,11 +116,17 @@ class MasterActivity : AppCompatActivity() {
       typeUnits?.map { it -> getString(it.t()) })
     fromUnitAdapter.setDropDownViewResource(layout.simple_spinner_item)
     fromUnitSpinner.onItemSelectedListener = FromUnitItemSelected(typeUnits,
-      onChange = { fromUnit, toUnit ->
-        executor.execute(dataInput.text.toString(), Pair(fromUnit, toUnit),
-          onResult = { updatedResultBox(it) })
+      notifyChange = {
+        executor.execute(dataInput.text.toString(), onResult = { updatedResultBox(it) })
       })
     fromUnitSpinner.adapter = fromUnitAdapter
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    if (!textChangesSubscription.isUnsubscribed) {
+      textChangesSubscription.unsubscribe()
+    }
   }
 
   private fun updatedResultBox(result: Double) {

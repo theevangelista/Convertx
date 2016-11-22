@@ -3,7 +3,6 @@ package io.github.joaoevangelista.convertx.activity
 import io.github.joaoevangelista.convertx.op.Areas
 import io.github.joaoevangelista.convertx.op.Conversions
 import io.github.joaoevangelista.convertx.op.Lengths
-import io.github.joaoevangelista.convertx.op.NamedUnit
 import io.github.joaoevangelista.convertx.op.Temperatures
 
 /**
@@ -11,13 +10,13 @@ import io.github.joaoevangelista.convertx.op.Temperatures
  */
 class ConversionExecutor {
 
-  fun execute(input: String, unitPair: Pair<NamedUnit?, NamedUnit?>,
+  fun execute(input: String,
     onResult: (result: Double) -> Unit): Unit {
 
     if (!input.isBlank()) {
       val number = input.toDouble()
-      val from = unitPair.first
-      val to = unitPair.second
+      val from = UnitsSelectedHolder.fromUnit
+      val to = UnitsSelectedHolder.toUnit
       when (from) {
         is Lengths -> onResult(Conversions.ofLength(number, from, to as Lengths?).value as Double)
         is Temperatures -> onResult(
