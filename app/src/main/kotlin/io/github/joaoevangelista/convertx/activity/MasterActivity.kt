@@ -26,6 +26,7 @@ import io.github.joaoevangelista.convertx.op.NamedUnit
 import io.github.joaoevangelista.convertx.op.conversions
 import io.github.joaoevangelista.convertx.op.typesMap
 import rx.Subscription
+import rx.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit.MILLISECONDS
 
 class MasterActivity : AppCompatActivity() {
@@ -77,9 +78,11 @@ class MasterActivity : AppCompatActivity() {
       }
     }
 
-    RxTextView.textChanges(dataInput).debounce(500,
-      MILLISECONDS).map { it.toString() }
-      .filter(String::isBlank).subscribe { }
+    RxTextView.textChanges(dataInput).debounce(500, MILLISECONDS).map { it.toString() }
+      .filter(String::isNotBlank)
+      .subscribeOn(AndroidSchedulers.mainThread())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe { executor.execute(it, { updatedResultBox(it) }) }
 
     // load initial set of types
     loadTypesForConversion(conversions[0])
