@@ -102,7 +102,7 @@ class MasterActivity : AppCompatActivity() {
     val toUnitAdapter = ArrayAdapter<String>(baseContext, layout.first_item_spinner_layout,
       typeUnits?.map { it -> getString(it.t()) })
     toUnitAdapter.setDropDownViewResource(layout.simple_spinner_item)
-    toUnitSpinner.onItemSelectedListener = ToUnitItemSelected(typeUnits)
+    toUnitSpinner.onItemSelectedListener = ToUnitItemSelected(typeUnits, onChange = { unit -> })
     toUnitSpinner.adapter = toUnitAdapter
   }
 
@@ -110,7 +110,7 @@ class MasterActivity : AppCompatActivity() {
     val fromUnitAdapter = ArrayAdapter<String>(baseContext, layout.first_item_spinner_layout,
       typeUnits?.map { it -> getString(it.t()) })
     fromUnitAdapter.setDropDownViewResource(layout.simple_spinner_item)
-    fromUnitSpinner.onItemSelectedListener = FromUnitItemSelected(typeUnits)
+    fromUnitSpinner.onItemSelectedListener = FromUnitItemSelected(typeUnits, onChange = { unit -> })
     fromUnitSpinner.adapter = fromUnitAdapter
   }
 
