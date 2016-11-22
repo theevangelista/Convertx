@@ -22,12 +22,12 @@ import io.github.joaoevangelista.convertx.R
 import io.github.joaoevangelista.convertx.R.id
 import io.github.joaoevangelista.convertx.R.layout
 import io.github.joaoevangelista.convertx.R.string
-import io.github.joaoevangelista.convertx.bindView
 import io.github.joaoevangelista.convertx.op.ConversionExecutor
 import io.github.joaoevangelista.convertx.op.ConversionTypes
 import io.github.joaoevangelista.convertx.op.NamedUnit
 import io.github.joaoevangelista.convertx.op.conversions
 import io.github.joaoevangelista.convertx.op.typesMap
+import io.github.joaoevangelista.convertx.support.bindView
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import java.text.DecimalFormat
