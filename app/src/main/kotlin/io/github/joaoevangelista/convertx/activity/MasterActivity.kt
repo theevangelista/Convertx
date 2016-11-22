@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import io.github.joaoevangelista.convertx.R
 import io.github.joaoevangelista.convertx.R.id
 import io.github.joaoevangelista.convertx.R.layout
@@ -44,6 +45,10 @@ class MasterActivity : AppCompatActivity() {
 
   private val resultText: TextView by bindView(id.result_text_view)
 
+  private var currentConversion: ConversionTypes = conversions[0]
+
+  private val executor = ConversionExecutor()
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(layout.activity_master)
@@ -71,6 +76,7 @@ class MasterActivity : AppCompatActivity() {
 
     dataInput.addTextChangedListener(object : TextWatcher {
       override fun afterTextChanged(p0: Editable?) {
+
       }
 
       override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -82,6 +88,7 @@ class MasterActivity : AppCompatActivity() {
 
     // load initial set of types
     loadTypesForConversion(conversions[0])
+    this.currentConversion = conversions[0]
   }
 
   private fun setCustomFonts() {
@@ -102,7 +109,11 @@ class MasterActivity : AppCompatActivity() {
     val toUnitAdapter = ArrayAdapter<String>(baseContext, layout.first_item_spinner_layout,
       typeUnits?.map { it -> getString(it.t()) })
     toUnitAdapter.setDropDownViewResource(layout.simple_spinner_item)
-    toUnitSpinner.onItemSelectedListener = ToUnitItemSelected(typeUnits, onChange = { unit -> })
+    toUnitSpinner.onItemSelectedListener = ToUnitItemSelected(typeUnits,
+      onChange = { fromUnit, toUnit ->
+        executor.execute(dataInput.text.toString(), Pair(fromUnit, toUnit),
+          onResult = { updatedResultBox(it) })
+      })
     toUnitSpinner.adapter = toUnitAdapter
   }
 
@@ -110,8 +121,16 @@ class MasterActivity : AppCompatActivity() {
     val fromUnitAdapter = ArrayAdapter<String>(baseContext, layout.first_item_spinner_layout,
       typeUnits?.map { it -> getString(it.t()) })
     fromUnitAdapter.setDropDownViewResource(layout.simple_spinner_item)
-    fromUnitSpinner.onItemSelectedListener = FromUnitItemSelected(typeUnits, onChange = { unit -> })
+    fromUnitSpinner.onItemSelectedListener = FromUnitItemSelected(typeUnits,
+      onChange = { fromUnit, toUnit ->
+        executor.execute(dataInput.text.toString(), Pair(fromUnit, toUnit),
+          onResult = { updatedResultBox(it) })
+      })
     fromUnitSpinner.adapter = fromUnitAdapter
+  }
+
+  private fun updatedResultBox(result: Double) {
+    Toast.makeText(this, "Result: $result", Toast.LENGTH_SHORT).show()
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {

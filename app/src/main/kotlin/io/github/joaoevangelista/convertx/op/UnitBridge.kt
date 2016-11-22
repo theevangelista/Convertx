@@ -12,4 +12,6 @@ class UnitBridge {
   fun measureUnit(measure: Lengths) = Unit.valueOf(measure.unit)!!
 
   fun temperatureUnit(temperatures: Temperatures) = Unit.valueOf(temperatures.unit)!!
+
+  fun areaUnit(areas: Areas) = Unit.valueOf(areas.unit)!!
 }

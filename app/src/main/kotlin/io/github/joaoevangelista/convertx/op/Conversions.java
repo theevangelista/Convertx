@@ -29,4 +29,10 @@ public class Conversions {
     //noinspection unchecked
     return measure.to(unitBridge.temperatureUnit(target));
   }
+
+  public static Measure ofArea(Double value, Areas unit, Areas target) {
+    Measure measure = Measure.valueOf(value, unitBridge.areaUnit(unit));
+    //noinspection unchecked
+    return measure.to(unitBridge.areaUnit(target));
+  }
 }
