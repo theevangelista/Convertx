@@ -44,4 +44,5 @@
   <string name="unit_volume_gallon_dry_us">Gallon Dry US</string>
   <string name="unit_volume_gallon_uk">Gallon UK</string>
   <string name="unit_volume_ounce_liquid_uk">Ounce Liquid UK</string>
+  <string name="dashes">-----</string>
 </resources>

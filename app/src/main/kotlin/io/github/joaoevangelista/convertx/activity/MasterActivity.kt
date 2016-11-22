@@ -1,6 +1,8 @@
 package io.github.joaoevangelista.convertx.activity
 
+import android.animation.Animator
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.CardView
@@ -8,13 +10,13 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewAnimationUtils
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import android.widget.Toast
 import com.jakewharton.rxbinding.widget.RxTextView
 import io.github.joaoevangelista.convertx.R
 import io.github.joaoevangelista.convertx.R.id
@@ -27,6 +29,7 @@ import io.github.joaoevangelista.convertx.op.conversions
 import io.github.joaoevangelista.convertx.op.typesMap
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
+import java.text.DecimalFormat
 import java.util.concurrent.TimeUnit.MILLISECONDS
 
 class MasterActivity : AppCompatActivity() {
@@ -50,6 +53,8 @@ class MasterActivity : AppCompatActivity() {
   private var currentConversion: ConversionTypes = conversions[0]
 
   private val executor = ConversionExecutor()
+
+  private val decimalFormatter = DecimalFormat("##.####")
 
   private lateinit var textChangesSubscription: Subscription
 
@@ -78,7 +83,8 @@ class MasterActivity : AppCompatActivity() {
       }
     }
 
-    RxTextView.textChanges(dataInput).debounce(500, MILLISECONDS).map { it.toString() }
+    textChangesSubscription = RxTextView.textChanges(dataInput).debounce(500,
+      MILLISECONDS).map { it.toString() }
       .filter(String::isNotBlank)
       .subscribeOn(AndroidSchedulers.mainThread())
       .observeOn(AndroidSchedulers.mainThread())
@@ -133,7 +139,28 @@ class MasterActivity : AppCompatActivity() {
   }
 
   private fun updatedResultBox(result: Double) {
-    Toast.makeText(this, "Result: $result", Toast.LENGTH_SHORT).show()
+    val isNotVisible = resultCard.visibility != View.VISIBLE
+    if (isNotVisible) {
+      enterReveal()
+    }
+    resultText.text = result.toString()
+  }
+
+  private fun enterReveal() {
+    // get the center
+    val cx = resultCard.measuredWidth / 2
+    val cy = resultCard.measuredHeight / 2
+    // get final radius
+    val finalRadius = Math.max(resultCard.width, resultCard.height / 2).toFloat()
+
+    var anim: Animator? = null
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      anim = ViewAnimationUtils.createCircularReveal(resultCard, cx, cy, 0f, finalRadius)
+    }
+    resultCard.visibility = View.VISIBLE
+    anim?.start()
+
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {

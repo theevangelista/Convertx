@@ -44,6 +44,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_margin="8dp"
+      android:visibility="invisible"
       >
       <RelativeLayout
         android:layout_width="match_parent"
@@ -56,7 +57,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:padding="8dp"
-          android:text="89997"
+          android:text="@string/dashes"
           android:textAlignment="center"
           android:textColor="@color/white"
           android:textSize="54sp"
