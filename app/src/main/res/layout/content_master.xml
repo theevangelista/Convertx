@@ -32,7 +32,7 @@
           android:background="@android:color/transparent"
           android:gravity="top|start"
           android:hint="@string/touch_to_type"
-          android:inputType="number"
+          android:inputType="numberDecimal"
           android:lines="3"
           android:textSize="20sp"
           />
