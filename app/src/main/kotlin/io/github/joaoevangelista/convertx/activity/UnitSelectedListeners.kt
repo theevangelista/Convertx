@@ -34,5 +34,10 @@ object UnitsSelectedHolder {
   var fromUnit: NamedUnit? = null
 
   var toUnit: NamedUnit? = null
+  
+  fun clear() {
+    fromUnit = null
+    toUnit = null
+  }
 
 }

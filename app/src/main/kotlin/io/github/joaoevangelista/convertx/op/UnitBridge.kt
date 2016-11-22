@@ -1,5 +1,6 @@
 package io.github.joaoevangelista.convertx.op
 
+import javax.measure.quantity.Quantity
 import javax.measure.unit.Unit
 
 /**
@@ -9,9 +10,11 @@ class UnitBridge {
   /**
    * Return our the Measure type of spec from the unit
    */
-  fun measureUnit(measure: Lengths) = Unit.valueOf(measure.unit)!!
+  fun measureUnit(measure: Lengths): Unit<out Quantity>? = Unit.valueOf(measure.unit)
 
-  fun temperatureUnit(temperatures: Temperatures) = Unit.valueOf(temperatures.unit)!!
+  fun temperatureUnit(temperatures: Temperatures): Unit<out Quantity>? = Unit.valueOf(temperatures.unit)
 
-  fun areaUnit(areas: Areas) = Unit.valueOf(areas.unit)!!
+  fun areaUnit(areas: Areas): Unit<out Quantity>? = Unit.valueOf(areas.unit)
+
+  fun volumeUnit(volumes: Volumes): Unit<out Quantity>? = Unit.valueOf(volumes.unit)
 }

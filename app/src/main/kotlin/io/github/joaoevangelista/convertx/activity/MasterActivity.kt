@@ -23,6 +23,7 @@ import io.github.joaoevangelista.convertx.R.id
 import io.github.joaoevangelista.convertx.R.layout
 import io.github.joaoevangelista.convertx.R.string
 import io.github.joaoevangelista.convertx.bindView
+import io.github.joaoevangelista.convertx.op.ConversionExecutor
 import io.github.joaoevangelista.convertx.op.ConversionTypes
 import io.github.joaoevangelista.convertx.op.NamedUnit
 import io.github.joaoevangelista.convertx.op.conversions
@@ -79,6 +80,7 @@ class MasterActivity : AppCompatActivity() {
 
       override fun onItemSelected(adapter: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val conversion = conversions[position]
+        UnitsSelectedHolder.clear()
         loadTypesForConversion(conversion)
       }
     }

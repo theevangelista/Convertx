@@ -1,7 +1,9 @@
 package io.github.joaoevangelista.convertx.op;
 
+import android.support.annotation.NonNull;
 import javax.measure.Measure;
 import javax.measure.unit.Unit;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Main class that do conversion of units
@@ -18,21 +20,31 @@ public class Conversions {
     //no instance
   }
 
+  @NonNull
   public static Measure ofLength(Double value, Lengths unit, Lengths target) {
     Measure measure = Measure.valueOf(value, unitBridge.measureUnit(unit));
     //noinspection unchecked
     return measure.to(unitBridge.measureUnit(target));
   }
 
+  @NonNull
   public static Measure ofTemperature(Double value, Temperatures unit, Temperatures target) {
     Measure measure = Measure.valueOf(value, unitBridge.temperatureUnit(unit));
     //noinspection unchecked
     return measure.to(unitBridge.temperatureUnit(target));
   }
 
+  @NonNull
   public static Measure ofArea(Double value, Areas unit, Areas target) {
     Measure measure = Measure.valueOf(value, unitBridge.areaUnit(unit));
     //noinspection unchecked
     return measure.to(unitBridge.areaUnit(target));
+  }
+
+  @NotNull
+  public static Measure ofVolume(Double value, Volumes unit, Volumes target) {
+    Measure measure = Measure.valueOf(value, unitBridge.volumeUnit(unit));
+    //noinspection unchecked
+    return measure.to(unitBridge.volumeUnit(target));
   }
 }
