@@ -10,29 +10,60 @@
   tools:context="io.github.joaoevangelista.convertx.activity.MasterActivity"
   tools:showIn="@layout/activity_master"
   >
-
-  <android.support.v7.widget.CardView
-    android:layout_margin="8dp"
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     >
-    <RelativeLayout
+    <android.support.v7.widget.CardView
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:padding="16dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="8dp"
       >
-      <EditText
-        android:id="@+id/data_input"
+      <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:gravity="top|start"
-        android:hint="@string/touch_to_type"
-        android:inputType="number"
-        android:lines="3"
-        android:textSize="20sp"
-        />
-    </RelativeLayout>
-  </android.support.v7.widget.CardView>
+        android:padding="16dp"
+        >
+        <EditText
+          android:id="@+id/data_input"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@android:color/transparent"
+          android:gravity="top|start"
+          android:hint="@string/touch_to_type"
+          android:inputType="number"
+          android:lines="3"
+          android:textSize="20sp"
+          />
+      </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
+    <android.support.v7.widget.CardView
+      android:id="@+id/result_card_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_margin="8dp"
+      >
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/primary_accent_gradient"
+        android:padding="16dp"
+        >
+        <TextView
+          android:id="@+id/result_text_view"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:padding="8dp"
+          android:text="89997"
+          android:textAlignment="center"
+          android:textColor="@color/white"
+          android:textSize="54sp"
+          />
+
+      </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+  </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -3,6 +3,7 @@ package io.github.joaoevangelista.convertx.activity
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.CardView
 import android.support.v7.widget.Toolbar
 import android.text.Editable
 import android.text.TextWatcher
@@ -18,6 +19,7 @@ import android.widget.TextView
 import io.github.joaoevangelista.convertx.R
 import io.github.joaoevangelista.convertx.R.id
 import io.github.joaoevangelista.convertx.R.layout
+import io.github.joaoevangelista.convertx.R.string
 import io.github.joaoevangelista.convertx.bindView
 import io.github.joaoevangelista.convertx.op.ConversionTypes
 import io.github.joaoevangelista.convertx.op.NamedUnit
@@ -38,15 +40,18 @@ class MasterActivity : AppCompatActivity() {
 
   private val dataInput: EditText by bindView(id.data_input)
 
+  private val resultCard: CardView by bindView(id.result_card_view)
+
+  private val resultText: TextView by bindView(id.result_text_view)
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(layout.activity_master)
 
     setSupportActionBar(toolbar)
     supportActionBar?.setDisplayShowTitleEnabled(false)
-    title.typeface = Typeface.createFromAsset(assets, getString(R.string.custom_font))
 
-    dataInput.typeface = Typeface.createFromAsset(assets, getString(R.string.custom_font))
+    setCustomFonts()
 
     val names = conversions.map { it -> getString(it.title) }
     val conversionTypesAdapter = ArrayAdapter<String>(baseContext, layout.first_item_spinner_layout,
@@ -77,6 +82,13 @@ class MasterActivity : AppCompatActivity() {
 
     // load initial set of types
     loadTypesForConversion(conversions[0])
+  }
+
+  private fun setCustomFonts() {
+    val customFont = Typeface.createFromAsset(assets, getString(string.custom_font))
+    title.typeface = customFont
+    dataInput.typeface = customFont
+    resultText.typeface = customFont
   }
 
   private fun loadTypesForConversion(conversionTypes: ConversionTypes) {
