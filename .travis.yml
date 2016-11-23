@@ -1,0 +1,33 @@
+language: android
+sudo: required #override memory size
+android:
+    components:
+    - tools # to get the new `repository-11.xml`
+    - tools # see https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943)
+    - platform-tools
+    - add-on
+    - build-tools-25.0.1
+    - android-25
+    - extra-android-m2repository
+    - extra-google-m2repository
+    - extra-google-google_play_services
+    # System images
+    - sys-img-x86-google_apis-25
+
+after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
+
+before_script:
+  - chmod +x ./gradlew
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
+# Scripting
+
+script:
+  - ./gradlew test
