@@ -34,7 +34,7 @@
           android:hint="@string/touch_to_type"
           android:inputType="numberDecimal"
           android:lines="3"
-          android:textSize="22sp"
+          android:textSize="18sp"
           />
       </RelativeLayout>
     </android.support.v7.widget.CardView>
