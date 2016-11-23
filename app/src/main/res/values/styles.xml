@@ -10,6 +10,7 @@
 
   <style name="ToolbarSpinnerTheme" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
     <item name="android:textColor">@android:color/background_light</item>
+    <item name="overlapAnchor">true</item>
   </style>
 
   <style name="AppTheme.NoActionBar">
@@ -29,5 +30,6 @@
     <item name="colorControlHighlight">@android:color/background_light</item>
     <item name="android:scrollbarSize">4dp</item>
     <item name="android:scrollbarThumbVertical">@drawable/accent_scroll_thumb</item>
+    <item name="overlapAnchor">true</item>
   </style>
 </resources>
