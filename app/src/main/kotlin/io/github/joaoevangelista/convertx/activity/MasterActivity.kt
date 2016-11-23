@@ -29,6 +29,7 @@ import io.github.joaoevangelista.convertx.op.NamedUnit
 import io.github.joaoevangelista.convertx.op.conversions
 import io.github.joaoevangelista.convertx.op.typesMap
 import io.github.joaoevangelista.convertx.support.bindView
+import me.grantland.widget.AutofitTextView
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import java.text.DecimalFormat
@@ -51,7 +52,7 @@ class MasterActivity : AppCompatActivity() {
 
   private val resultCard: CardView by bindView(id.result_card_view)
 
-  private val resultText: TextView by bindView(id.result_text_view)
+  private val resultText: AutofitTextView by bindView(id.result_text_view)
 
   private var currentConversion: ConversionTypes = conversions[0]
 
