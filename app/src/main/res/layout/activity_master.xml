@@ -28,6 +28,10 @@
         android:id="@+id/toolbar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/end_padding_toolbar_title"
+        android:paddingLeft="@dimen/end_padding_toolbar_title"
+        android:paddingRight="@dimen/end_padding_toolbar_title"
+        android:paddingStart="@dimen/end_padding_toolbar_title"
         android:text="@string/app_name"
         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
         />
@@ -36,9 +40,11 @@
         android:id="@+id/conversion_spinner_selector"
         android:layout_width="@dimen/spinner_toolbar_width"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="1dp"
+        android:paddingEnd="@dimen/end_padding_toolbar_spinner"
+        android:paddingLeft="@dimen/end_padding_toolbar_spinner"
+        android:paddingRight="@dimen/end_padding_toolbar_spinner"
+        android:paddingStart="@dimen/end_padding_toolbar_spinner"
         />
     </android.support.v7.widget.Toolbar>
 

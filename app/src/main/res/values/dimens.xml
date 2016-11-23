@@ -7,4 +7,6 @@
   <dimen name="thumb_radius">2dp</dimen>
   <dimen name="secondary_bar_elevation">4dp</dimen>
   <dimen name="secondary_bar_padding">4dp</dimen>
+  <dimen name="end_padding_toolbar_title">8dp</dimen>
+  <dimen name="end_padding_toolbar_spinner">16dp</dimen>
 </resources>
