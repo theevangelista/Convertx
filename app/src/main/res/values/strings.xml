@@ -8,6 +8,7 @@
   <string name="action_settings">Settings</string>
   <string name="touch_to_type">Touch to type…</string>
   <string name="arrow">Arrow</string>
+  <string name="empty_input_message">What\'s next ?</string>
 
 
   <!-- Units -->

@@ -1,6 +1,7 @@
 package io.github.joaoevangelista.convertx.activity
 
 import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
@@ -32,6 +33,7 @@ import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import java.text.DecimalFormat
 import java.util.concurrent.TimeUnit.MILLISECONDS
+
 
 class MasterActivity : AppCompatActivity() {
 
@@ -85,16 +87,26 @@ class MasterActivity : AppCompatActivity() {
       }
     }
 
-    textChangesSubscription = RxTextView.textChanges(dataInput).debounce(500,
-      MILLISECONDS).map { it.toString() }
-      .filter(String::isNotBlank)
+    textChangesSubscription = RxTextView.textChanges(dataInput).debounce(500, MILLISECONDS)
+      .map { it.toString() }
       .subscribeOn(AndroidSchedulers.mainThread())
       .observeOn(AndroidSchedulers.mainThread())
-      .subscribe { executor.execute(it, { updatedResultBox(it) }) }
+      .subscribe {
+        decideActionUponEmpty(it)
+      }
+
 
     // load initial set of types
     loadTypesForConversion(conversions[0])
     this.currentConversion = conversions[0]
+  }
+
+  private fun decideActionUponEmpty(input: String) {
+    if (input.isNotBlank()) {
+      executor.execute(input, { updatedResultBox(it) })
+    } else {
+      closeResultBox()
+    }
   }
 
   private fun setCustomFonts() {
@@ -141,12 +153,17 @@ class MasterActivity : AppCompatActivity() {
   }
 
   private fun updatedResultBox(result: Double) {
+    resultText.text = result.toString()
     val isNotVisible = resultCard.visibility != View.VISIBLE
     if (isNotVisible) {
       enterReveal()
     }
-    resultText.text = result.toString()
   }
+
+  private fun closeResultBox() {
+    exitReveal()
+  }
+
 
   private fun enterReveal() {
     // get the center
@@ -164,6 +181,32 @@ class MasterActivity : AppCompatActivity() {
     anim?.start()
 
   }
+
+  private fun exitReveal() {
+    // get the center
+    val cx = resultCard.measuredWidth / 2
+    val cy = resultCard.measuredHeight / 2
+    // get intial radius
+    val initialRadius = resultCard.width / 2
+
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      val anim = ViewAnimationUtils.createCircularReveal(resultCard, cx, cy,
+        initialRadius.toFloat(), 0f)
+
+      anim.addListener(object : AnimatorListenerAdapter() {
+        override fun onAnimationEnd(animation: Animator) {
+          super.onAnimationEnd(animation)
+          resultCard.visibility = View.GONE
+        }
+      })
+
+      anim.start()
+    } else {
+      resultCard.visibility = View.GONE
+    }
+  }
+
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     // Inflate the menu; this adds items to the action bar if it is present.
