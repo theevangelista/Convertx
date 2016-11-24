@@ -2,6 +2,8 @@
 
 A handy app to convert units
 
+[![Build Status](https://travis-ci.org/joaoevangelista/Convertx.svg?branch=master)](https://travis-ci.org/joaoevangelista/Convertx)
+
 
 Releases
 ---
