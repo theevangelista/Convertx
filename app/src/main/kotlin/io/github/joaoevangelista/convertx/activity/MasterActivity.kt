@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
+import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.CardView
 import android.support.v7.widget.Toolbar
@@ -32,6 +33,11 @@ import io.github.joaoevangelista.convertx.op.conversions
 import io.github.joaoevangelista.convertx.op.typesMap
 import io.github.joaoevangelista.convertx.support.CopyManager
 import io.github.joaoevangelista.convertx.support.bindView
+import it.sephiroth.android.library.tooltip.Tooltip.AnimationBuilder
+import it.sephiroth.android.library.tooltip.Tooltip.Builder
+import it.sephiroth.android.library.tooltip.Tooltip.ClosePolicy
+import it.sephiroth.android.library.tooltip.Tooltip.Gravity.BOTTOM
+import it.sephiroth.android.library.tooltip.Tooltip.make
 import me.grantland.widget.AutofitTextView
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -102,6 +108,16 @@ class MasterActivity : AppCompatActivity() {
     copyResultButton.setOnClickListener {
       copyManager.copyToClipboard(resultText.text.toString(), { notifyCopied() })
     }
+    copyResultButton.setOnLongClickListener { v ->
+      val builder = genTooltipBuilder(v, string.copy_result, COPY_BUTTON_REQ_ID)
+      make(this, builder).show()
+      true
+    }
+    copyFormattedResultButton.setOnLongClickListener { v ->
+      val builder = genTooltipBuilder(v, string.copy_formatted_result, COPY_FORMATTED_BUTTON_REQ_ID)
+      make(this, builder).show()
+      true
+    }
 
     textChangesSubscription = RxTextView.textChanges(dataInput).debounce(500, MILLISECONDS)
       .map { it.toString() }
@@ -115,6 +131,16 @@ class MasterActivity : AppCompatActivity() {
     // load initial set of types
     loadTypesForConversion(conversions[0])
     this.currentConversion = conversions[0]
+  }
+
+  private fun genTooltipBuilder(v: View?, @StringRes text: Int, reqId: Int): Builder? {
+    return Builder(reqId).anchor(v, BOTTOM).closePolicy(ClosePolicy.TOUCH_ANYWHERE_NO_CONSUME, 2500)
+      .activateDelay(200)
+      .showDelay(300)
+      .text(resources, text)
+      .withStyleId(R.style.AppTheme_Tooltip)
+      .withOverlay(false)
+      .floatingAnimation(AnimationBuilder.SLOW)
   }
 
   private fun notifyCopied() {
@@ -243,5 +269,11 @@ class MasterActivity : AppCompatActivity() {
       return true
     }
     return super.onOptionsItemSelected(item)
+  }
+
+
+  companion object {
+    val COPY_BUTTON_REQ_ID = 101
+    val COPY_FORMATTED_BUTTON_REQ_ID = 102
   }
 }
