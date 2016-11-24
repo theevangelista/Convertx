@@ -58,8 +58,8 @@ def initFabricPropertiesIfNeeded() {
   if (!propertiesFile.exists()) {
     def commentMessage = "Auto-generated file from ENV"
     ant.propertyfile(file: "fabric.properties", comment: commentMessage) {
-      entry(key: "apiSecret", value: System.getenv("FABRIC_API_SECRET") || "")
-      entry(key: "apiKey", value: System.getenv("FABRIC_API_KEY") || "")
+      entry(key: "apiSecret", value: System.getenv("FABRIC_API_SECRET"))
+      entry(key: "apiKey", value: System.getenv("FABRIC_API_KEY"))
     }
   }
 }
