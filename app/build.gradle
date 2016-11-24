@@ -48,3 +48,18 @@ dependencies {
   compile 'com.android.support:design:25.0.1'
   testCompile 'junit:junit:4.12'
 }
+
+afterEvaluate {
+  initFabricPropertiesIfNeeded()
+}
+
+def initFabricPropertiesIfNeeded() {
+  def propertiesFile = file('fabric.properties')
+  if (!propertiesFile.exists()) {
+    def commentMessage = "Auto-generated file from ENV"
+    ant.propertyfile(file: "fabric.properties", comment: commentMessage) {
+      entry(key: "apiSecret", value: System.getenv("FABRIC_API_SECRET") || "")
+      entry(key: "apiKey", value: System.getenv("FABRIC_API_KEY") || "")
+    }
+  }
+}
