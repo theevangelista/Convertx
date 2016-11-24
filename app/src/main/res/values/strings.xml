@@ -9,8 +9,8 @@
   <string name="touch_to_type">Touch to type…</string>
   <string name="arrow">Arrow</string>
   <string name="empty_input_message">What\'s next ?</string>
-
-
+  <string name="copy_result_label">Convertx result</string>
+  <string name="text_copied_notification">Copied to clipboard</string>
   <!-- Units -->
   <!-- Length -->
   <string name="unit_length_meters">Meter</string>
@@ -46,4 +46,5 @@
   <string name="unit_volume_gallon_uk">Gallon UK</string>
   <string name="unit_volume_ounce_liquid_uk">Ounce Liquid UK</string>
   <string name="dashes">-----</string>
+  <string name="copy_result">Copy Result</string>
 </resources>

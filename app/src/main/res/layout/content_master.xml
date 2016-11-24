@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/primary_accent_gradient"
-        android:padding="24dp"
+        android:padding="16dp"
         >
         <me.grantland.widget.AutofitTextView
           android:id="@+id/result_text_view"
@@ -66,6 +66,44 @@
           android:textSize="56sp"
           autofit:minTextSize="24sp"
           tools:ignore="Deprecated"
+          />
+
+
+        <View
+          android:id="@+id/result_divider"
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_below="@id/result_text_view"
+          android:layout_marginTop="16dp"
+          android:background="@android:color/background_light"
+          />
+
+        <ImageButton
+          android:id="@+id/btn_copy_result"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_below="@+id/result_divider"
+          android:layout_marginTop="16dp"
+          android:background="@android:color/transparent"
+          android:contentDescription="@string/copy_result"
+          android:padding="14dp"
+          app:srcCompat="@drawable/ic_content_copy_white_24dp"
+          />
+
+        <ImageButton
+          android:id="@+id/btn_copy_formatted_result"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/result_divider"
+          android:layout_marginTop="16dp"
+          android:layout_toLeftOf="@+id/btn_copy_result"
+          android:layout_toStartOf="@+id/btn_copy_result"
+          android:background="@android:color/transparent"
+          android:contentDescription="@string/copy_result"
+          android:padding="14dp"
+          app:srcCompat="@drawable/ic_regex"
           />
 
       </RelativeLayout>

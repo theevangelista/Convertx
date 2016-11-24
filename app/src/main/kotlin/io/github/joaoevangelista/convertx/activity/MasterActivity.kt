@@ -16,8 +16,10 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import com.jakewharton.rxbinding.widget.RxTextView
 import io.github.joaoevangelista.convertx.R
 import io.github.joaoevangelista.convertx.R.id
@@ -28,11 +30,11 @@ import io.github.joaoevangelista.convertx.op.ConversionTypes
 import io.github.joaoevangelista.convertx.op.NamedUnit
 import io.github.joaoevangelista.convertx.op.conversions
 import io.github.joaoevangelista.convertx.op.typesMap
+import io.github.joaoevangelista.convertx.support.CopyManager
 import io.github.joaoevangelista.convertx.support.bindView
 import me.grantland.widget.AutofitTextView
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
-import java.text.DecimalFormat
 import java.util.concurrent.TimeUnit.MILLISECONDS
 
 
@@ -54,11 +56,15 @@ class MasterActivity : AppCompatActivity() {
 
   private val resultText: AutofitTextView by bindView(id.result_text_view)
 
+  private val copyResultButton: ImageButton by bindView(id.btn_copy_result)
+
+  private val copyFormattedResultButton: ImageButton by bindView(id.btn_copy_formatted_result)
+
   private var currentConversion: ConversionTypes = conversions[0]
 
   private val executor = ConversionExecutor()
 
-  private val decimalFormatter = DecimalFormat("##.####")
+  private lateinit var copyManager: CopyManager
 
   private lateinit var textChangesSubscription: Subscription
 
@@ -70,6 +76,8 @@ class MasterActivity : AppCompatActivity() {
     supportActionBar?.setDisplayShowTitleEnabled(false)
 
     setCustomFonts()
+
+    copyManager = CopyManager(this)
 
     val names = conversions.map { it -> getString(it.title) }
     val conversionTypesAdapter = ArrayAdapter<String>(baseContext, layout.first_item_spinner_layout,
@@ -88,6 +96,13 @@ class MasterActivity : AppCompatActivity() {
       }
     }
 
+    copyFormattedResultButton.setOnClickListener {
+      copyManager.copyFormattedToClipboard(resultText.text.toString(), { notifyCopied() })
+    }
+    copyResultButton.setOnClickListener {
+      copyManager.copyToClipboard(resultText.text.toString(), { notifyCopied() })
+    }
+
     textChangesSubscription = RxTextView.textChanges(dataInput).debounce(500, MILLISECONDS)
       .map { it.toString() }
       .subscribeOn(AndroidSchedulers.mainThread())
@@ -100,6 +115,10 @@ class MasterActivity : AppCompatActivity() {
     // load initial set of types
     loadTypesForConversion(conversions[0])
     this.currentConversion = conversions[0]
+  }
+
+  private fun notifyCopied() {
+    Toast.makeText(this, R.string.text_copied_notification, Toast.LENGTH_SHORT).show()
   }
 
   private fun decideActionUponEmpty(input: String) {
@@ -165,7 +184,6 @@ class MasterActivity : AppCompatActivity() {
     exitReveal()
   }
 
-
   private fun enterReveal() {
     // get the center
     val cx = resultCard.measuredWidth / 2
@@ -207,7 +225,6 @@ class MasterActivity : AppCompatActivity() {
       resultCard.visibility = View.GONE
     }
   }
-
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     // Inflate the menu; this adds items to the action bar if it is present.
