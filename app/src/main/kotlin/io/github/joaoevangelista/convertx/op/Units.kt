@@ -103,21 +103,6 @@ enum class Volumes(val unit: String) : NamedUnit {
   },
   CUBIC_INCH("in³") {
     override fun t(): Int = R.string.unit_volume_cubic_inch
-  },
-  GALLON_LIQUID_US("gal") {
-    override fun t(): Int = R.string.unit_volume_gallon_liquid_us
-  },
-  OUNCE_LIQUID_US("oz_fl") {
-    override fun t(): Int = R.string.unit_volume_ounce_liquid_us
-  },
-  GALLON_DRY_US("gallon_dry_us") {
-    override fun t(): Int = R.string.unit_volume_gallon_dry_us
-  },
-  GALLON_UK("gal_uk") {
-    override fun t(): Int = R.string.unit_volume_gallon_uk
-  },
-  OUNCE_LIQUID_UK("oz_fl_uk") {
-    override fun t(): Int = R.string.unit_volume_ounce_liquid_uk
   }
 }
 
