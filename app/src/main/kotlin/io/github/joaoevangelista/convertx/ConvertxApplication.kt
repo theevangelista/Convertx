@@ -3,6 +3,7 @@ package io.github.joaoevangelista.convertx
 import android.app.Application
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
+import com.squareup.leakcanary.LeakCanary
 import io.fabric.sdk.android.Fabric
 
 /**
@@ -12,6 +13,8 @@ class ConvertxApplication : Application() {
 
   override fun onCreate() {
     super.onCreate()
+    if (LeakCanary.isInAnalyzerProcess(this)) return
+    LeakCanary.install(this)
     enableReleaseOnly()
   }
 
