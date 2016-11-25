@@ -14,12 +14,15 @@ android:
     - extra-google-m2repository
     - extra-google-google_play_services
     # System images
-    - sys-img-x86-google_apis-25
+    - sys-img-armeabi-v7a-android-25
 
 after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
 
 before_script:
   - chmod +x ./gradlew
+  - chmod +x ./scripts/unit-test-step.sh
+  - chmod +x ./scripts/run-avd.sh
+  - chmod +x ./scripts/instrumented-test-step.sh
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -32,4 +35,5 @@ cache:
 # Scripting
 
 script:
-  - ./gradlew test
+  - ./scripts/unit-test-step.sh
+  - ./scripts/instrumented-test-step.sh android-25
