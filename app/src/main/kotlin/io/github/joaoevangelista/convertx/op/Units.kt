@@ -6,6 +6,7 @@ import io.github.joaoevangelista.convertx.R
 import io.github.joaoevangelista.convertx.op.ConversionTypes.AREA
 import io.github.joaoevangelista.convertx.op.ConversionTypes.FORCES
 import io.github.joaoevangelista.convertx.op.ConversionTypes.LENGTH
+import io.github.joaoevangelista.convertx.op.ConversionTypes.MASS
 import io.github.joaoevangelista.convertx.op.ConversionTypes.TEMPERATURE
 import io.github.joaoevangelista.convertx.op.ConversionTypes.VOLUME
 import io.github.joaoevangelista.convertx.op.ConversionTypes.values
@@ -18,9 +19,12 @@ interface NamedUnit {
 }
 
 enum class ConversionTypes(@StringRes val title: Int) {
-  LENGTH(R.string.conversion_measure_unit), TEMPERATURE(R.string.conversion_temperature), AREA(
-    R.string.conversion_area),
-  VOLUME(R.string.conversion_volume), FORCES(R.string.conversion_force)
+  LENGTH(R.string.conversion_measure_unit),
+  TEMPERATURE(R.string.conversion_temperature),
+  AREA(R.string.conversion_area),
+  VOLUME(R.string.conversion_volume),
+  FORCES(R.string.conversion_force),
+  MASS(R.string.conversion_mass)
 }
 
 enum class Lengths(val unit: String) : NamedUnit {
@@ -121,7 +125,17 @@ enum class Forces(val unit: String) : NamedUnit {
     override fun t(): Int = R.string.unit_force_newton
   }
 }
-
+enum class Mass(val unit: String) : NamedUnit{
+  GRAMS("g") {
+    override fun t(): Int = R.string.unit_mass_grams
+  },
+  KILOGRAM("kg") {
+    override fun t(): Int = R.string.unit_mass_kilogram
+  },
+  TON("t") {
+    override fun t(): Int = R.string.unit_mass_ton
+  }
+}
 
 val areas = Areas.values()
 val lengths = Lengths.values()
@@ -129,10 +143,13 @@ val temperatures = Temperatures.values()
 val volumes = Volumes.values()
 val conversions = values()
 val forces = Forces.values()
+val mass = Mass.values()
 val typesMap = arrayListOf(
   Pair<ConversionTypes, Array<out NamedUnit>>(LENGTH, lengths),
   Pair<ConversionTypes, Array<out NamedUnit>>(AREA, areas),
   Pair<ConversionTypes, Array<out NamedUnit>>(VOLUME, volumes),
   Pair<ConversionTypes, Array<out NamedUnit>>(TEMPERATURE, temperatures),
-  Pair<ConversionTypes, Array<out NamedUnit>>(FORCES, forces)
+  Pair<ConversionTypes, Array<out NamedUnit>>(FORCES, forces),
+  Pair<ConversionTypes, Array<out NamedUnit>>(MASS, mass)
+
 )
