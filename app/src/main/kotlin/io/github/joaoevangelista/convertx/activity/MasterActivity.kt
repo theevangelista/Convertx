@@ -22,6 +22,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import com.jakewharton.rxbinding.widget.RxTextView
+import io.github.joaoevangelista.convertx.HistoryFragment
 import io.github.joaoevangelista.convertx.R
 import io.github.joaoevangelista.convertx.R.id
 import io.github.joaoevangelista.convertx.R.layout
@@ -131,6 +132,11 @@ class MasterActivity : AppCompatActivity() {
     // load initial set of types
     loadTypesForConversion(conversions[0])
     this.currentConversion = conversions[0]
+
+    // add history fragment
+    supportFragmentManager.beginTransaction()
+      .replace(R.id.frame_holder, HistoryFragment.newInstance())
+      .commit()
   }
 
   private fun genTooltipBuilder(v: View?, @StringRes text: Int, reqId: Int): Builder? {
