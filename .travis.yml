@@ -34,8 +34,7 @@ cache:
 # Scripting
 
 script:
-  - ./scripts/unit-test-step.sh
-  - ./scripts/instrumented-test-step.sh
+  - ./scripts/unit-test-step.sh && ./scripts/instrumented-test-step.sh
 
 after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
 
