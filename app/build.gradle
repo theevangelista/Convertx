@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'io.fabric'
+apply plugin: 'jacoco-android'
 //noinspection GroovyMissingReturnStatement
 android {
   compileSdkVersion 25
@@ -9,8 +10,8 @@ android {
     applicationId "io.github.joaoevangelista.convertx"
     minSdkVersion 16
     targetSdkVersion 25
-    versionCode 1
-    versionName "1.0"
+    versionName androidGitVersion.name()
+    versionCode androidGitVersion.code()
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     vectorDrawables.useSupportLibrary = true
   }
