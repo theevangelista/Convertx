@@ -20,8 +20,7 @@ public class Conversions {
     //no instance
   }
 
-  @NonNull
-  public static Measure ofLength(Double value, Lengths unit, Lengths target) {
+  @NonNull public static Measure ofLength(Double value, Lengths unit, Lengths target) {
     Measure measure = Measure.valueOf(value, unitBridge.measureUnit(unit));
     //noinspection unchecked
     return measure.to(unitBridge.measureUnit(target));
@@ -34,17 +33,21 @@ public class Conversions {
     return measure.to(unitBridge.temperatureUnit(target));
   }
 
-  @NonNull
-  public static Measure ofArea(Double value, Areas unit, Areas target) {
+  @NonNull public static Measure ofArea(Double value, Areas unit, Areas target) {
     Measure measure = Measure.valueOf(value, unitBridge.areaUnit(unit));
     //noinspection unchecked
     return measure.to(unitBridge.areaUnit(target));
   }
 
-  @NotNull
-  public static Measure ofVolume(Double value, Volumes unit, Volumes target) {
+  @NotNull public static Measure ofVolume(Double value, Volumes unit, Volumes target) {
     Measure measure = Measure.valueOf(value, unitBridge.volumeUnit(unit));
     //noinspection unchecked
     return measure.to(unitBridge.volumeUnit(target));
+  }
+
+  @SuppressWarnings("unchecked")
+  public static Measure ofForce(Double value, Forces unit, Forces target) {
+    Measure measure = Measure.valueOf(value, unitBridge.forceUnit(unit));
+    return measure.to(unitBridge.forceUnit(target));
   }
 }

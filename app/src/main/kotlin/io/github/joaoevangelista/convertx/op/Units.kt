@@ -4,6 +4,7 @@ import android.support.annotation.StringRes
 import android.util.Pair
 import io.github.joaoevangelista.convertx.R
 import io.github.joaoevangelista.convertx.op.ConversionTypes.AREA
+import io.github.joaoevangelista.convertx.op.ConversionTypes.FORCES
 import io.github.joaoevangelista.convertx.op.ConversionTypes.LENGTH
 import io.github.joaoevangelista.convertx.op.ConversionTypes.TEMPERATURE
 import io.github.joaoevangelista.convertx.op.ConversionTypes.VOLUME
@@ -19,7 +20,7 @@ interface NamedUnit {
 enum class ConversionTypes(@StringRes val title: Int) {
   LENGTH(R.string.conversion_measure_unit), TEMPERATURE(R.string.conversion_temperature), AREA(
     R.string.conversion_area),
-  VOLUME(R.string.conversion_volume)
+  VOLUME(R.string.conversion_volume), FORCES(R.string.conversion_force)
 }
 
 enum class Lengths(val unit: String) : NamedUnit {
@@ -106,13 +107,32 @@ enum class Volumes(val unit: String) : NamedUnit {
   }
 }
 
-val areas = Areas.values()
+enum class Forces(val unit: String) : NamedUnit {
+  DYNE("dyn") {
+    override fun t(): Int = R.string.unit_force_dyne
+  },
+  KILOGRAM_FORCE("kgf") {
+    override fun t(): Int = R.string.unit_force_kilogram_force
+  },
+  POUND_FORCE("lbf") {
+    override fun t(): Int = R.string.unit_force_pound_force
+  },
+  NEWTON("N") {
+    override fun t(): Int = R.string.unit_force_newton
+  }
+}
 
+
+val areas = Areas.values()
 val lengths = Lengths.values()
 val temperatures = Temperatures.values()
 val volumes = Volumes.values()
 val conversions = values()
-val typesMap = arrayListOf(Pair<ConversionTypes, Array<out NamedUnit>>(LENGTH, lengths),
+val forces = Forces.values()
+val typesMap = arrayListOf(
+  Pair<ConversionTypes, Array<out NamedUnit>>(LENGTH, lengths),
   Pair<ConversionTypes, Array<out NamedUnit>>(AREA, areas),
   Pair<ConversionTypes, Array<out NamedUnit>>(VOLUME, volumes),
-  Pair<ConversionTypes, Array<out NamedUnit>>(TEMPERATURE, temperatures))
+  Pair<ConversionTypes, Array<out NamedUnit>>(TEMPERATURE, temperatures),
+  Pair<ConversionTypes, Array<out NamedUnit>>(FORCES, forces)
+)

@@ -17,4 +17,6 @@ class UnitBridge {
   fun areaUnit(areas: Areas): Unit<out Quantity>? = Unit.valueOf(areas.unit)
 
   fun volumeUnit(volumes: Volumes): Unit<out Quantity>? = Unit.valueOf(volumes.unit)
+
+  fun forceUnit(forces: Forces): Unit<out Quantity>? = Unit.valueOf(forces.unit)
 }
