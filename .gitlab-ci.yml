@@ -2,8 +2,7 @@ image: 51systems/gitlab-ci-android
 
 before_script:
   - export GRADLE_USER_HOME=/cache/.gradle
-  - android-update-sdk build-tools-25.0.1,android-25
-  - android-update-sdk extra-android-m2repository,extra-google-m2repository,extra-google-google_play_services
+  - android-update-sdk tools,build-tools-25.0.1,android-25,extra-android-m2repository,extra-google-m2repository,extra-google-google_play_services
   - chmod +x ./gradlew
 
 
