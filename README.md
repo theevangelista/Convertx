@@ -3,6 +3,7 @@
 A handy app to convert units
 
 [![Build Status](https://travis-ci.org/joaoevangelista/Convertx.svg?branch=master)](https://travis-ci.org/joaoevangelista/Convertx)
+[![codecov](https://codecov.io/gh/joaoevangelista/Convertx/branch/master/graph/badge.svg)](https://codecov.io/gh/joaoevangelista/Convertx)
 
 
 Releases
