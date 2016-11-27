@@ -22,11 +22,13 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import com.jakewharton.rxbinding.widget.RxTextView
-import io.github.joaoevangelista.convertx.HistoryFragment
 import io.github.joaoevangelista.convertx.R
 import io.github.joaoevangelista.convertx.R.id
 import io.github.joaoevangelista.convertx.R.layout
 import io.github.joaoevangelista.convertx.R.string
+import io.github.joaoevangelista.convertx.history.Entry
+import io.github.joaoevangelista.convertx.history.HistoryFragment
+import io.github.joaoevangelista.convertx.history.createEntryAsync
 import io.github.joaoevangelista.convertx.op.ConversionExecutor
 import io.github.joaoevangelista.convertx.op.ConversionTypes
 import io.github.joaoevangelista.convertx.op.NamedUnit
@@ -120,7 +122,7 @@ class MasterActivity : AppCompatActivity() {
       true
     }
 
-    textChangesSubscription = RxTextView.textChanges(dataInput).debounce(500, MILLISECONDS)
+    textChangesSubscription = RxTextView.textChanges(dataInput).debounce(600, MILLISECONDS)
       .map { it.toString() }
       .subscribeOn(AndroidSchedulers.mainThread())
       .observeOn(AndroidSchedulers.mainThread())
@@ -155,7 +157,7 @@ class MasterActivity : AppCompatActivity() {
 
   private fun decideActionUponEmpty(input: String) {
     if (input.isNotBlank()) {
-      executor.execute(input, { updatedResultBox(it) })
+      executor.execute(input, { updateChanges(it) })
     } else {
       closeResultBox()
     }
@@ -181,7 +183,7 @@ class MasterActivity : AppCompatActivity() {
     toUnitAdapter.setDropDownViewResource(layout.simple_spinner_item)
     toUnitSpinner.onItemSelectedListener = ToUnitItemSelected(typeUnits,
       notifyChange = {
-        executor.execute(dataInput.text.toString(), onResult = { updatedResultBox(it) })
+        executor.execute(dataInput.text.toString(), onResult = { updateChanges(it) })
       })
     toUnitSpinner.adapter = toUnitAdapter
   }
@@ -192,7 +194,7 @@ class MasterActivity : AppCompatActivity() {
     fromUnitAdapter.setDropDownViewResource(layout.simple_spinner_item)
     fromUnitSpinner.onItemSelectedListener = FromUnitItemSelected(typeUnits,
       notifyChange = {
-        executor.execute(dataInput.text.toString(), onResult = { updatedResultBox(it) })
+        executor.execute(dataInput.text.toString(), onResult = { updateChanges(it) })
       })
     fromUnitSpinner.adapter = fromUnitAdapter
   }
@@ -204,7 +206,21 @@ class MasterActivity : AppCompatActivity() {
     }
   }
 
-  private fun updatedResultBox(result: Double) {
+  private fun updateChanges(result: Double) {
+    updateCard(result)
+    saveEntry(result)
+  }
+
+  private fun saveEntry(result: Double) {
+    createEntryAsync(Entry(
+      UnitsSelectedHolder.fromUnit!!.toString(),
+      UnitsSelectedHolder.toUnit!!.toString(),
+      dataInput.text.toString().toDouble(),
+      result
+    ))
+  }
+
+  private fun updateCard(result: Double) {
     resultText.text = result.toString()
     val isNotVisible = resultCard.visibility != View.VISIBLE
     if (isNotVisible) {

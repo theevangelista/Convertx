@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'io.fabric'
 apply plugin: 'jacoco-android'
+apply plugin: 'realm-android'
 //noinspection GroovyMissingReturnStatement
 android {
   compileSdkVersion 25

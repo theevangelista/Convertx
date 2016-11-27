@@ -59,4 +59,5 @@
   <string name="dashes">-----</string>
   <string name="copy_result">Copy Result</string>
   <string name="copy_formatted_result">Copy Formatted Result</string>
+  <string name="to">to</string>
 </resources>
